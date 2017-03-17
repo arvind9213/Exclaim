@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load css_filters %}
+
+{% block content %}
+<div class="panel panel-default col-sm-6 col-sm-offset-3">
+  <div class="panel-body">
+    <h4 align="center"><span>Create New Post</span></h4>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="well col-sm-8 col-sm-offset-2">
+    <div >
+     <form method="POST" action="" enctype="multipart/form-data" >
+        {%csrf_token%}
+        
+        {{form.title.errors}}
+        <label for="id_title">Title:</label>
+        {{form.title|add_css:"form-control"}}
+        <hr>
+
+        {{form.content.errors}}
+        <label for="id_content">Content:</label>
+        {{form.content|add_css:"form-control"}}
+        <hr>
+
+        {{form.embeded_field.errors}}
+        <label for="id_embeded_field">Embeded Links:</label>
+        {{form.embeded_field|add_css:"form-control"}}
+        <hr>
+
+        {{form.url_field.errors}}
+        <label for="id_url_field">Links Bookmark:</label>
+        {{form.url_field|add_css:"form-control"}}
+        <hr>
+
+        {{form.tags_field.errors}}
+        <label for="id_tags">Tags: <small>e.g. comma separated tags</small></label>
+        {{form.tags_field|add_css:"form-control"}}
+        <hr>
+
+        {{form.image.errors}}
+        <label for="id_image">Image:</label>
+        {{form.image}}
+        <hr>
+
+        {{form.draft.errors}}
+        <label for="id_draft">Draft:</label>
+        {{form.draft}}
+        <hr>
+
+        {{form.publish.errors}}
+        <label for="id_title">Publish: <small>YYYY-MM-DD</small></label>
+        {{form.publish|add_css:"form-control"}}
+        <hr>
+
+
+
+        <button type="submit" class="btn btn-default btn-primary" style="float: right" >Create Post</button>
+        {% if instance %}
+        <button class="btn btn-default" style="float: right; margin-right: 3px;"><a href="{% url 'posts:detail' instance.slug %}">Cancel</a></button>
+        {% else %}
+        <button class="btn btn-default" style="float: right; margin-right: 3px;"><a href="{% url 'posts:list' %}">Cancel</a></button>
+        {%endif%}
+
+        
+
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,101 @@
+{% load staticfiles %}
+<!--DOCTYPE html -->
+<html>
+
+<head>
+
+  <title>{% block head_title%}Exclaim{%endblock head_title %}</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <link rel='stylesheet' href = '{% static "css/base.css" %}' />
+
+  <style>
+  {% block style %}
+  h1{
+    color: #000000;
+  }
+ 
+  
+  {% endblock style %}
+  </style>
+
+</head>
+
+<body>
+
+<div class="container-fluid" style="margin-bottom: 60px; ">
+  <nav class="navbar navbar-default navbar-fixed-top" style="background-color:   #005ce6">
+  
+  <div class="container-fluid">
+    
+    <div class="navbar-header ">
+      <a class="navbar-brand" href="{%url 'posts:list'%}" ><span  style="color: #FFFFFF"><b> Exclaim</b></span></a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            
+      <ul class="nav navbar-nav">
+        <li><a href="{%url 'posts:create'%}"><span style="color: #FFFFFF">Create New Post</span></a></li> 
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        
+        <form class="navbar-form navbar-left" action="{%url 'posts:list'%}" method="GET">
+          <div class="form-group">
+            <input type="text" name="q" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          </button>
+        </form>
+        
+        <li>
+        {% if request.user.is_authenticated %}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color: #FFFFFF">Logged In: </b><span style="color:#330000"><b>{{ request.user.username }}</b></span> <span class="caret"></span></a>
+          <ul class="dropdown-menu" >
+            
+            <li><a href="{% url 'login' %}"><span style="color: #008000">Login with other account</span></a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{% url 'logout' %}"><span style="color:  #4d0000">Logout</span></a></li>
+          </ul>
+        </li>
+        {% else %}<a href="{% url 'login' %}"><span style="color:  #FFFFFF"><b>Login</b></span></a>{% endif %}
+        </li>
+        
+
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+
+  </div><!-- /.container-fluid -->
+
+</nav>  
+</div>
+
+
+  {% include "messages_display.html"%}
+  <div class='container'>
+      {% block content %}
+    {% endblock content %}
+  </div>
+
+
+  <!-- For facebook comments -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+
+</body>
+
+</html>

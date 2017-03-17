@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<div class="row">
+
+<div class='col-sm-8' style="margin-right: 20px;" >
+{%for obj in object_list%}
+<div class="row">
+
+  
+    <div class="thumbnail" >
+    
+        
+       
+        <p style="float: right;"><small ><span class="panel panel-info">{{obj.updated}}</span></small></p>
+        <p style="font-size: 30px;"><a href='{{obj.get_absolute_url}}'><span class="
+        panel panel-primary"><b style="padding: 3px;">{{obj.title}}</b></span></a></p>
+
+        {% if obj.image %}
+        <hr>
+        <img src='{{obj.image.url}}' class="img-responsive"/>
+        {%endif%}
+
+        {% if obj.embeded_field %}
+        <hr>
+        <div align="center">
+          {%autoescape off%}{{ obj.embeded_field}}{%endautoescape%}
+        </div>
+        {%endif%}
+
+
+        {% if obj.url_field%}
+        <p align="center"><a href="{{obj.url_field}}" target="_blank" class="btn-xs btn-danger" role="button">View direct page source</a></p>
+        <hr>
+        <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="{{obj.url_field}}"></iframe>
+        </div>
+
+        {%endif%}
+
+        <hr>
+
+        <div style="word-wrap: break-word;"><b>Description : </b>{{obj.content|linebreaks}}</div>
+        <hr>
+        
+        <p><a href="{{obj.get_absolute_url}}" class="btn-xs btn-primary" role="button">View More</a> <a href="{%url 'posts:delete' obj.slug %}" class="btn-xs btn-default" role="button">Delete</a> <a href="{% url 'posts:update' obj.slug %}" class="btn-xs btn-primary" role="button">Update</a></p>
+        <hr>
+
+        <p><b>Author </b>: {{obj.user}}</p>
+
+    </div>
+  
+<hr/>
+</div>
+
+{%endfor%}
+
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?{{page_request_var}}={{ object_list.previous_page_number }}" class="badge">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page <span class="badge">{{ object_list.number }}</span> of <span class="badge">{{ object_list.paginator.num_pages }}</span>
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?{{page_request_var}}={{ object_list.next_page_number }}" class="badge">next</a>
+        {% endif %}
+    </span>
+</div>
+
+</div>
+
+
+<div class="col-sm-3" style="background-color: #005ce6  ; padding-left: 0px;padding-right: 0px; height: 100%
+" >
+<table class="table">
+    {% for users in users_list%}
+    <tr>
+        <td><a href=""><span style="color: #FFFFFF">{{users.username}}</span></a></td>
+    </tr>
+     
+    {%endfor%}
+     
+  </table>
+   
+</div>
+
+</div>
+
+{% endblock content %}
+
+
+
+  
